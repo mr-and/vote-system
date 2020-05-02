@@ -9,7 +9,7 @@
 	<artifactId>graduation</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>graduation</name>
-	<description>Building a voting system for deciding where to have a lunch.</description>
+	<description>Building a voting system for deciding where to have a lunch</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

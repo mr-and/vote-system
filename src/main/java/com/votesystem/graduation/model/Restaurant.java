@@ -1,11 +1,28 @@
 package com.votesystem.graduation.model;
 
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-public class Restaurant {
+@Entity
+@Table(name = "restaurants")
+public class Restaurant extends AbstractBaseIdEntity {
 
+    @Column(name = "name", nullable = false)
     private String name;
-    private Menu menu;
-    private List<Vote> vote;
 
+    public Restaurant() {}
+
+    public Restaurant(Integer id, String name) {
+        super(id);
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }
