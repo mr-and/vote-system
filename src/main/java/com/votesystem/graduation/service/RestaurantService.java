@@ -14,6 +14,4 @@ public interface RestaurantService {
 
     void update(Restaurant restaurant, int id);
 
-    void delete(int id);
-
 }

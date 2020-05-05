@@ -1,16 +1,23 @@
 package com.votesystem.graduation.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
+@NoArgsConstructor
+@Getter
+@Setter
 @Table(name = "votes")
-public class Vote extends AbstractBaseIdEntity{
+public class Vote extends AbstractBaseIdEntity implements Serializable {
 
     @Column(name = "date", nullable = false)
     @NotNull
@@ -27,9 +34,6 @@ public class Vote extends AbstractBaseIdEntity{
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    public Vote() {
-    }
-
     public Vote(LocalDate date, Menu menu, User user) {
         this(null, date, menu, user);
     }
@@ -38,30 +42,6 @@ public class Vote extends AbstractBaseIdEntity{
         super(id);
         this.date = date;
         this.menu = menu;
-        this.user = user;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public Menu getMenu() {
-        return menu;
-    }
-
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
         this.user = user;
     }
 

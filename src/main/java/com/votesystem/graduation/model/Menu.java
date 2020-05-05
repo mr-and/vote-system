@@ -1,17 +1,24 @@
 package com.votesystem.graduation.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "menu")
-public class Menu extends AbstractBaseIdEntity{
+public class Menu extends AbstractBaseIdEntity implements Serializable {
 
     @Column(name = "date", nullable = false)
     @NotNull
@@ -26,9 +33,6 @@ public class Menu extends AbstractBaseIdEntity{
     @OrderBy("name")
     private List<Dish> dishes;
 
-    public Menu() {
-    }
-
     public Menu(LocalDate date, Restaurant restaurant) {
         super();
         this.date = date;
@@ -40,30 +44,6 @@ public class Menu extends AbstractBaseIdEntity{
         super(id);
         this.date = date;
         this.restaurant = restaurant;
-        this.dishes = dishes;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
-    }
-
-    public List<Dish> getDishes() {
-        return dishes;
-    }
-
-    public void setDishes(List<Dish> dishes) {
         this.dishes = dishes;
     }
 

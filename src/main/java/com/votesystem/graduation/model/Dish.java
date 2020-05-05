@@ -1,30 +1,37 @@
 package com.votesystem.graduation.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 @Entity
-@Table(name = "dishes")
-public class Dish extends AbstractBaseIdEntity{
+@Getter
+@Setter
+@NoArgsConstructor
+@Table(name = "dishes", uniqueConstraints = {@UniqueConstraint(columnNames = {"name"}, name = "dish_unique_name_idx")})
+public class Dish extends AbstractBaseIdEntity implements Serializable {
 
     @Column(name = "name", nullable = false)
+    @NotBlank
     private String name;
 
     @Column(name = "price", nullable = false)
+    @Min(value = 1, message = "price must be greater than 0")
     private Long price;
 
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "menu_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private Menu menu;
-
-    public Dish() {
-    }
 
     public Dish(Integer id, String name, Long price, Menu menu) {
         super(id);
@@ -33,36 +40,11 @@ public class Dish extends AbstractBaseIdEntity{
         this.menu = menu;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getPrice() {
-        return price;
-    }
-
-    public void setPrice(Long price) {
-        this.price = price;
-    }
-
-    public Menu getMenu() {
-        return menu;
-    }
-
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
-
     @Override
     public String toString() {
         return "Dish{" +
                 "name='" + name + '\'' +
                 ", price=" + price +
-                ", menu=" + menu +
                 ", id=" + id +
                 '}';
     }

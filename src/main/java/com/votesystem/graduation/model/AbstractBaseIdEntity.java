@@ -3,16 +3,18 @@ package com.votesystem.graduation.model;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
 public abstract class AbstractBaseIdEntity implements HasId {
 
-    public static final int START_SEQ = 100000;
+    public static final int START_SEQ = 1000;
 
     @Id
     @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
+    @Column(name = "id", nullable = false, updatable = false)
     protected Integer id;
 
     protected AbstractBaseIdEntity() {

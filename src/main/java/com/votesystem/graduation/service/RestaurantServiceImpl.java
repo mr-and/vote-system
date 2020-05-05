@@ -29,7 +29,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Restaurant getId(int restId){
-        return checkNotFoundWithId(restaurantRepository.getOne(restId), restId);
+        return checkNotFoundWithId(restaurantRepository.findById(restId), restId).get();
     }
 
     @Override
@@ -49,9 +49,4 @@ public class RestaurantServiceImpl implements RestaurantService {
         restaurantRepository.save(restaurant);
     }
 
-    @Override
-    public void delete(int restId){
-        checkNotFoundWithId(restaurantRepository.findById(restId), restId);
-        restaurantRepository.deleteById(restId);
-    }
 }

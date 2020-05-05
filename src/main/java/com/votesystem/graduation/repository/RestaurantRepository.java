@@ -1,7 +1,6 @@
 package com.votesystem.graduation.repository;
 
 import com.votesystem.graduation.model.Restaurant;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +16,6 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
     <S extends Restaurant> S save(S entity);
 
     @Override
-    @EntityGraph(attributePaths = {"menu"}, type = EntityGraph.EntityGraphType.LOAD)
     List<Restaurant> findAll();
 
     @Override
