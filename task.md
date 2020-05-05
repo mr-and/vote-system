@@ -22,3 +22,14 @@ Build a voting system for deciding where to have lunch.
 ###### It should contain the code and README.md with API documentation and curl commands to get data for voting and vote.
 
 ######P.S.: Make sure everything works with latest version that is on github :)
+
+
+- GET       /api/v1/restaurants/                        получить все рестораны
+- POST      /api/v1/restaurants/                        добавить ресторан(только админ)
+- GET       /api/v1/restaurants/menu?date=?             получить все меню всех ресторанов по дате
+- GET       /api/v1/restaurants/{id}/menu?date=?        получить меню конкретного ресторана
+- POST      /api/v1/restaurants/{id}/menu/              добавить меню конкретного ресторана(только админ)
+- PUT       /api/v1/restaurants/{id}/menu/{id}          обновить меню конкретного ресторана(только админ)
+- DELETE    /api/v1/restaurants/{id}/menu/{id}          удалить меню конкретного ресторана(только админ)
+- DELETE    /api/v1/restaurants/{id}                    удалить конкретный ресторан(только админ)
+- POST      /api/v1/restaurants/{id}/menu/{id}/votes    добавить голос за меню ресторана
