@@ -17,33 +17,50 @@ Build a voting system for deciding where to have lunch.
  
 7. Each restaurant provides new menu each day.
 
-###### As a result, provide a link to github repository.
+###### As a result, provide a link to github voteRepository.
 
 ###### It should contain the code and README.md with API documentation and curl commands to get data for voting and vote.
 
 ######P.S.: Make sure everything works with latest version that is on github :)
 
 ------------------------------------------------------------------------------------------------------------------------
-- GET       /api/v1/restaurants/                        получить все рестораны
-    curl -s http://localhost:8080/api/v1/restaurants
+- GET       /api/v1/restaurants/                            получить все рестораны +
+
+  curl -s http://localhost:8080/api/v1/restaurants
 ------------------------------------------------------------------------------------------------------------------------
-- GET       /api/v1/restaurants/                        получить ресторан по id
-    curl -s http://localhost:8080/api/v1/restaurants/1004
+- GET       /api/v1/restaurants/{id}                        получить ресторан по id +
+
+  curl -s http://localhost:8080/api/v1/restaurants/1004
 ------------------------------------------------------------------------------------------------------------------------
-- POST      /api/v1/restaurants/                        добавить ресторан(только админ)
-    curl -s -X POST http://localhost:8080/api/v1/restaurants -H 'Content-Type: application/json' -d '{"name":"Шушары"}'
+- POST      /api/v1/restaurants/                            добавить ресторан(только админ) +
+
+  curl -s -X POST http://localhost:8080/api/v1/restaurants -H 'Content-Type: application/json' -d '{"name":"New"}'
 ------------------------------------------------------------------------------------------------------------------------
-- GET       /api/v1/restaurants/menu?date=?             получить все меню всех ресторанов по дате
+- POST      /api/v1/restaurants/{id}/menu                   добавить меню ресторану(только админ) +
+
+  curl -s -X POST http://localhost:8080/api/v1/restaurants/1004/menu -H 'Content-Type: application/json' -d '{"date":"2020-05-05"}'
 ------------------------------------------------------------------------------------------------------------------------
-- GET       /api/v1/restaurants/{id}/menu?date=?        получить меню конкретного ресторана
+- GET       /api/v1/restaurants/{id}/menu                   получить все меню конкретного ресторана  +
+
+  curl -s http://localhost:8080/api/v1/restaurants/1004/menu
 ------------------------------------------------------------------------------------------------------------------------
-- POST      /api/v1/restaurants/{id}/menu/              добавить меню конкретного ресторана(только админ)
+- GET       /api/v1/restaurants/{id}/menu/{id}              получить конкретное меню с едой конкретного ресторана +
+
+  curl -s http://localhost:8080/api/v1/restaurants/1004/menu/1008 
 ------------------------------------------------------------------------------------------------------------------------
-- PUT       /api/v1/restaurants/{id}/menu/{id}          обновить меню конкретного ресторана(только админ)
+- PUT       /api/v1/restaurants/{id}/menu/{id}              обновить меню конкретного ресторана(только админ) +
+
+  curl -s -X PUT http://localhost:8080/api/v1/restaurants/1004/menu/1008 -H 'Content-Type: application/json' -d '{"date":"2020-06-05"}' 
 ------------------------------------------------------------------------------------------------------------------------
-- DELETE    /api/v1/restaurants/{id}/menu/{id}          удалить меню конкретного ресторана(только админ)
+- POST      /api/v1/restaurants/{id}/menu/{id}/dish         добавить еду в меню конкретного ресторана(только админ)
+
+  curl -s -X POST http://localhost:8080/api/v1/restaurants/1004/menu/1008/dish -H 'Content-Type: application/json' -d '{"name":"New","price":40}'      
 ------------------------------------------------------------------------------------------------------------------------
-- DELETE    /api/v1/restaurants/{id}                    удалить конкретный ресторан(только админ)
+- PUT       /api/v1/restaurants/{id}/menu/{id}/dish{id}     обновить еду для меню конкретного ресторана(только админ)
+
+  curl -s -X PUT http://localhost:8080/api/v1/restaurants/1004/menu/1008/dish/1016 -H 'Content-Type: application/json' -d '{"name":"NewTwo","price":30}'
 ------------------------------------------------------------------------------------------------------------------------
-- POST      /api/v1/restaurants/{id}/menu/{id}/votes    добавить голос за меню ресторана
+- POST      /api/v1/restaurants/{id}/menu/{id}/votes        добавить голос за меню ресторана
+
+  curl
 ------------------------------------------------------------------------------------------------------------------------

@@ -10,7 +10,7 @@ public interface RestaurantService {
 
     Restaurant getId (int restId);
 
-    Restaurant create (Restaurant restaurant);
+    Restaurant save(Restaurant restaurant);
 
     void update(Restaurant restaurant, int id);
 

@@ -28,7 +28,7 @@ public class Dish extends AbstractBaseIdEntity implements Serializable {
     private Long price;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "menu_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Menu menu;

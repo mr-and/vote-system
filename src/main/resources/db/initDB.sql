@@ -44,7 +44,7 @@ CREATE TABLE votes
 );
 
 ALTER TABLE users
-    add constraint UK_6dotkott2kjsp8vw4d0m25fb7 unique (email);
+    add constraint users_unique_email_idx unique (email);
 
 ALTER TABLE dishes
     add constraint FKmjyxiavmsmhlx7p6xg46a1lkf

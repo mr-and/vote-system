@@ -3,8 +3,8 @@ package com.votesystem.graduation.controller;
 
 import com.votesystem.graduation.model.Restaurant;
 import com.votesystem.graduation.service.RestaurantService;
+import com.votesystem.graduation.service.RestaurantServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,7 @@ public class RestaurantController {
     private final RestaurantService restaurantService;
 
     @Autowired
-    public RestaurantController(RestaurantService restaurantService) {
+    public RestaurantController(RestaurantServiceImpl restaurantService) {
         this.restaurantService = restaurantService;
     }
 
@@ -38,11 +38,9 @@ public class RestaurantController {
         return checkNotFoundWithId(restaurantService.getId(id), id);
     }
 
-
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> create(@RequestBody Restaurant restaurant) {
-        var saveInstance = restaurantService.create(restaurant);
-
+        var saveInstance = restaurantService.save(restaurant);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(saveInstance.getId()).toUri();

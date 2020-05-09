@@ -10,7 +10,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,13 +31,6 @@ public class Menu extends AbstractBaseIdEntity implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "menu", orphanRemoval = true)
     @OrderBy("name")
     private List<Dish> dishes;
-
-    public Menu(LocalDate date, Restaurant restaurant) {
-        super();
-        this.date = date;
-        this.restaurant = restaurant;
-        this.dishes = new ArrayList<>();
-    }
 
     public Menu(int id, LocalDate date, Restaurant restaurant, List<Dish> dishes) {
         super(id);
