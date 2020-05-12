@@ -54,5 +54,10 @@ public class MenuServiceImpl implements MenuService {
         return menuRepository.getMenuWithRestaurant(restaurantId, menuId);
     }
 
+    @Override
+    public Menu findById(int menuId) {
+        return menuRepository.findById(menuId);
+    }
+
 
 }

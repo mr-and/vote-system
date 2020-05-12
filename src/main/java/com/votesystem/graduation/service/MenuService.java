@@ -13,4 +13,7 @@ public interface MenuService {
     List<Menu> getAll(int restaurantId);
 
     Menu getMenuWithRestaurant(int restaurantId, int menuId);
+
+    Menu findById(int menuId);
+
 }

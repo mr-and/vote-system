@@ -1,8 +1,9 @@
 package com.votesystem.graduation.controller;
 
+import com.votesystem.graduation.configuration.AdminAccess;
+import com.votesystem.graduation.configuration.FullAccess;
 import com.votesystem.graduation.model.Menu;
 import com.votesystem.graduation.service.MenuService;
-import com.votesystem.graduation.service.MenuServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,6 +29,7 @@ public class MenuController {
 
 
     @GetMapping(value = {"/{id}/menu"})
+    @FullAccess
     public List<Menu> getAll(@PathVariable(value = "id") int restaurantId) {
         return menuService.getAll(restaurantId);
     }
@@ -40,6 +42,7 @@ public class MenuController {
     }
 
     @PostMapping(value = {"/{id}/menu"}, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @AdminAccess
     public ResponseEntity<Menu> create(@PathVariable(value = "id") int restaurantId, @RequestBody Menu menu) {
         var saveInstance = menuService.save(menu, restaurantId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -50,6 +53,7 @@ public class MenuController {
     }
 
     @PutMapping(value = {"/{restaurantId}/menu/{menuId}"}, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @AdminAccess
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(@PathVariable(value = "restaurantId") int restaurantId,
                        @PathVariable(value = "menuId") int menuId,

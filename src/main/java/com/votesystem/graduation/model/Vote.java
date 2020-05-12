@@ -1,5 +1,6 @@
 package com.votesystem.graduation.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
@@ -19,29 +21,29 @@ import java.time.LocalDate;
 @Table(name = "votes")
 public class Vote extends AbstractBaseIdEntity implements Serializable {
 
-    @Column(name = "date", nullable = false)
+    @Column(name = "date", insertable = false, updatable = false, nullable = false)
     @NotNull
     private LocalDate date;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "menu_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Menu menu;
+    @JsonBackReference(value = "vote")
+    private Restaurant restaurant;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonBackReference(value = "votes")
     private User user;
 
-    public Vote(LocalDate date, Menu menu, User user) {
-        this(null, date, menu, user);
+    public Vote(LocalDate localDate, User user) {
+        this(null, localDate, user);
     }
 
-    public Vote(Integer id, LocalDate date, Menu menu, User user) {
+    public Vote(Integer id, LocalDate localDate, User user) {
         super(id);
-        this.date = date;
-        this.menu = menu;
+        this.date = localDate;
         this.user = user;
     }
 

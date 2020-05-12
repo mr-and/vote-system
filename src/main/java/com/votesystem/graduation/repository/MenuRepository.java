@@ -26,4 +26,7 @@ public interface MenuRepository extends JpaRepository<Menu, Integer> {
     @Query(getMenuWithRestaurant)
     Menu getMenuWithRestaurant(@Param("restaurantId") int restaurantId, @Param("menuId") int menuId);
 
+    @EntityGraph(attributePaths = {"restaurant", "dishes"}, type = EntityGraph.EntityGraphType.LOAD)
+    Menu findById(int menuId);
+
 }

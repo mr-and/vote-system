@@ -1,6 +1,8 @@
 package com.votesystem.graduation.controller;
 
 
+import com.votesystem.graduation.configuration.AdminAccess;
+import com.votesystem.graduation.configuration.FullAccess;
 import com.votesystem.graduation.model.Restaurant;
 import com.votesystem.graduation.service.RestaurantService;
 import com.votesystem.graduation.service.RestaurantServiceImpl;
@@ -29,16 +31,20 @@ public class RestaurantController {
     }
 
     @GetMapping
+//    https://stackoverflow.com/questions/5402723/spring-security-meta-annotation
+    @FullAccess
     public List<Restaurant> getAll() {
         return restaurantService.getAll();
     }
 
     @GetMapping(value = "/{id}")
+    @FullAccess
     public Restaurant getOne(@PathVariable int id) {
         return checkNotFoundWithId(restaurantService.getId(id), id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @AdminAccess
     public ResponseEntity<Restaurant> create(@RequestBody Restaurant restaurant) {
         var saveInstance = restaurantService.save(restaurant);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()

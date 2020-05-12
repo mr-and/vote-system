@@ -26,41 +26,41 @@ Build a voting system for deciding where to have lunch.
 ------------------------------------------------------------------------------------------------------------------------
 - GET       /api/v1/restaurants/                            получить все рестораны +
 
-  curl -s http://localhost:8080/api/v1/restaurants
+  curl -s -u user.one@mail.ru:password http://localhost:8080/api/v1/restaurants
 ------------------------------------------------------------------------------------------------------------------------
 - GET       /api/v1/restaurants/{id}                        получить ресторан по id +
 
-  curl -s http://localhost:8080/api/v1/restaurants/1004
+  curl -s -u user.one@mail.ru:password http://localhost:8080/api/v1/restaurants/1004
 ------------------------------------------------------------------------------------------------------------------------
 - POST      /api/v1/restaurants/                            добавить ресторан(только админ) +
 
-  curl -s -X POST http://localhost:8080/api/v1/restaurants -H 'Content-Type: application/json' -d '{"name":"New"}'
+  curl -s -u admin.one@gmail.com:admin -X POST http://localhost:8080/api/v1/restaurants -H 'Content-Type: application/json' -d '{"name":"New", "votes":null}'
 ------------------------------------------------------------------------------------------------------------------------
 - POST      /api/v1/restaurants/{id}/menu                   добавить меню ресторану(только админ) +
 
-  curl -s -X POST http://localhost:8080/api/v1/restaurants/1004/menu -H 'Content-Type: application/json' -d '{"date":"2020-05-05"}'
+  curl -s -u admin.one@gmail.com:admin -X POST http://localhost:8080/api/v1/restaurants/1004/menu -H 'Content-Type: application/json' -d '{"date":"2020-05-02"}'
 ------------------------------------------------------------------------------------------------------------------------
 - GET       /api/v1/restaurants/{id}/menu                   получить все меню конкретного ресторана  +
 
-  curl -s http://localhost:8080/api/v1/restaurants/1004/menu
+  curl -s -u user.one@mail.ru:password http://localhost:8080/api/v1/restaurants/1004/menu
 ------------------------------------------------------------------------------------------------------------------------
 - GET       /api/v1/restaurants/{id}/menu/{id}              получить конкретное меню с едой конкретного ресторана +
 
-  curl -s http://localhost:8080/api/v1/restaurants/1004/menu/1008 
+  curl -s -u user.one@mail.ru:password http://localhost:8080/api/v1/restaurants/1004/menu/1008 
 ------------------------------------------------------------------------------------------------------------------------
 - PUT       /api/v1/restaurants/{id}/menu/{id}              обновить меню конкретного ресторана(только админ) +
 
-  curl -s -X PUT http://localhost:8080/api/v1/restaurants/1004/menu/1008 -H 'Content-Type: application/json' -d '{"date":"2020-06-05"}' 
+  curl -s -u admin.one@gmail.com:admin -X PUT http://localhost:8080/api/v1/restaurants/1004/menu/1008 -H 'Content-Type: application/json' -d '{"date":"2020-06-05"}' 
 ------------------------------------------------------------------------------------------------------------------------
 - POST      /api/v1/restaurants/{id}/menu/{id}/dish         добавить еду в меню конкретного ресторана(только админ)
 
-  curl -s -X POST http://localhost:8080/api/v1/restaurants/1004/menu/1008/dish -H 'Content-Type: application/json' -d '{"name":"New","price":40}'      
+  curl -s -u admin.one@gmail.com:admin -X POST http://localhost:8080/api/v1/restaurants/1004/menu/1008/dish -H 'Content-Type: application/json' -d '{"name":"New","price":40}'      
 ------------------------------------------------------------------------------------------------------------------------
 - PUT       /api/v1/restaurants/{id}/menu/{id}/dish{id}     обновить еду для меню конкретного ресторана(только админ)
 
-  curl -s -X PUT http://localhost:8080/api/v1/restaurants/1004/menu/1008/dish/1016 -H 'Content-Type: application/json' -d '{"name":"NewTwo","price":30}'
+  curl -s -u admin.one@gmail.com:admin -X PUT http://localhost:8080/api/v1/restaurants/1004/menu/1008/dish/1016 -H 'Content-Type: application/json' -d '{"name":"NewTwo","price":30}'
 ------------------------------------------------------------------------------------------------------------------------
 - POST      /api/v1/restaurants/{id}/menu/{id}/votes        добавить голос за меню ресторана
 
-  curl
+  curl -s -u user.one@mail.ru:password -X POST http://localhost:8080/api/v1/restaurants/1004/votes -H 'Content-Type: application/json' -d '{"date":"2020-06-05"}' 
 ------------------------------------------------------------------------------------------------------------------------

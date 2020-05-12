@@ -3,13 +3,11 @@ package com.votesystem.graduation.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -21,6 +19,9 @@ public class Restaurant extends AbstractBaseIdEntity implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "name", nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "restaurant")
+    private Set<Vote> votes;
 
     public Restaurant(Integer id, String name) {
         super(id);

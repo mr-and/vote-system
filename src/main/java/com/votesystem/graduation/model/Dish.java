@@ -1,5 +1,6 @@
 package com.votesystem.graduation.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,10 +28,10 @@ public class Dish extends AbstractBaseIdEntity implements Serializable {
     @Min(value = 1, message = "price must be greater than 0")
     private Long price;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "menu_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonBackReference(value = "dishes")
     private Menu menu;
 
     public Dish(Integer id, String name, Long price, Menu menu) {
