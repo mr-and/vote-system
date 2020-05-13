@@ -8,5 +8,5 @@ import java.lang.annotation.RetentionPolicy;
 
 @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 @Retention(RetentionPolicy.RUNTIME)
-public @interface FullAccess {
+public @interface AuthAccess {
 }

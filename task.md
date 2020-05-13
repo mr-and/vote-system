@@ -28,13 +28,17 @@ Build a voting system for deciding where to have lunch.
 
   curl -s -u user.one@mail.ru:password http://localhost:8080/api/v1/restaurants
 ------------------------------------------------------------------------------------------------------------------------
+- DELETE    /api/v1/restaurants/                            удалить ресторан по id +
+
+  curl -u admin.one@gmail.com:admin -X DELETE http://localhost:8080/api/v1/restaurants/1007 
+------------------------------------------------------------------------------------------------------------------------
 - GET       /api/v1/restaurants/{id}                        получить ресторан по id +
 
   curl -s -u user.one@mail.ru:password http://localhost:8080/api/v1/restaurants/1004
 ------------------------------------------------------------------------------------------------------------------------
 - POST      /api/v1/restaurants/                            добавить ресторан(только админ) +
 
-  curl -s -u admin.one@gmail.com:admin -X POST http://localhost:8080/api/v1/restaurants -H 'Content-Type: application/json' -d '{"name":"New", "votes":null}'
+  curl -s -u admin.one@gmail.com:admin -X POST http://localhost:8080/api/v1/restaurants -H 'Content-Type: application/json' -d '{"name":"New"}'
 ------------------------------------------------------------------------------------------------------------------------
 - POST      /api/v1/restaurants/{id}/menu                   добавить меню ресторану(только админ) +
 

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
@@ -26,17 +27,18 @@ public class User extends AbstractBaseIdEntity implements Serializable {
 
     @Column(name = "name", nullable = false)
     @NotBlank
+    @Length(min = 1, max = 20, message = "min = 1, max = 20")
     private String name;
 
     @Column(name = "email", nullable = false, unique = true)
     @Email
     @NotBlank
-    @Size(max = 50)
+    @Length(max = 50, message = "max = 50")
     private String email;
 
     @Column(name = "password", nullable = false, unique = true)
     @NotBlank
-    @Size(min = 5, max = 100)
+    @Length(min = 5, max = 20, message = "min = 5, max = 20")
     // https://stackoverflow.com/a/12505165/548473
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
@@ -49,7 +51,7 @@ public class User extends AbstractBaseIdEntity implements Serializable {
     )
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
-    @BatchSize(size = 200)
+    @BatchSize(size = 20)
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "user")

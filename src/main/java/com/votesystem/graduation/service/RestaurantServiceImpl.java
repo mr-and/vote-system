@@ -1,16 +1,16 @@
 package com.votesystem.graduation.service;
 
+import com.votesystem.graduation.exception.CustomNotFound;
 import com.votesystem.graduation.model.Restaurant;
 import com.votesystem.graduation.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.Optional;
 
-import static com.votesystem.graduation.util.ValidationUtil.*;
+import static com.votesystem.graduation.util.ValidationUtil.checkNew;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
@@ -23,13 +23,13 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public List<Restaurant> getAll() {
-        return restaurantRepository.findAll();
+    public Optional<Restaurant> findById(int restaurantId) {
+        return Optional.ofNullable(restaurantRepository.findById(restaurantId).orElseThrow(() -> new CustomNotFound(restaurantId)));
     }
 
     @Override
-    public Restaurant getId(int restId){
-        return checkNotFoundWithId(restaurantRepository.findById(restId), restId).get();
+    public List<Restaurant> getAll() {
+        return restaurantRepository.findAll();
     }
 
     @Override
@@ -39,14 +39,9 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantRepository.save(restaurant);
     }
 
-    @CacheEvict(value = "menu", allEntries = true)
-    @Transactional
     @Override
-    public void update(Restaurant restaurant, int restId) {
-        Assert.notNull(restaurant, "restaurant must not be null");
-        checkNotFoundWithId(restaurantRepository.findById(restId), restId);
-        assureIdConsistent(restaurant, restId);
-        restaurantRepository.save(restaurant);
+    public void delete(int restaurantId) {
+        restaurantRepository.findById(restaurantId).orElseThrow(() -> new CustomNotFound(restaurantId));
+        restaurantRepository.deleteById(restaurantId);
     }
-
 }

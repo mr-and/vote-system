@@ -1,5 +1,6 @@
 package com.votesystem.graduation.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -7,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,6 +24,10 @@ public class Restaurant extends AbstractBaseIdEntity implements Serializable {
 
     @OneToMany(mappedBy = "restaurant")
     private Set<Vote> votes;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "restaurant", orphanRemoval = true)
+    @JsonIgnore
+    private List<Menu> menus;
 
     public Restaurant(Integer id, String name) {
         super(id);

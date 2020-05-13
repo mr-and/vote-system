@@ -1,5 +1,6 @@
 package com.votesystem.graduation.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,13 +24,13 @@ public class Menu extends AbstractBaseIdEntity implements Serializable {
     @NotNull
     private LocalDate date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonBackReference(value = "menus")
     private Restaurant restaurant;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "menu", orphanRemoval = true)
-    @OrderBy("name")
     private List<Dish> dishes;
 
     public Menu(int id, LocalDate date, Restaurant restaurant, List<Dish> dishes) {

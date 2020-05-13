@@ -25,7 +25,7 @@ public class Vote extends AbstractBaseIdEntity implements Serializable {
     @NotNull
     private LocalDate date;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference(value = "vote")

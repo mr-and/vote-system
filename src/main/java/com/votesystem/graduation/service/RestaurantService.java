@@ -3,15 +3,15 @@ package com.votesystem.graduation.service;
 import com.votesystem.graduation.model.Restaurant;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RestaurantService {
 
-    List<Restaurant> getAll();
+    Optional<Restaurant> findById(int id);
 
-    Restaurant getId (int restId);
+    List<Restaurant> getAll();
 
     Restaurant save(Restaurant restaurant);
 
-    void update(Restaurant restaurant, int id);
-
+    void delete(int restaurantId);
 }

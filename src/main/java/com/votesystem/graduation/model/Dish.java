@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -22,6 +23,7 @@ public class Dish extends AbstractBaseIdEntity implements Serializable {
 
     @Column(name = "name", nullable = false)
     @NotBlank
+    @Length(min = 1, max = 20, message = "min = 1, max = 20")
     private String name;
 
     @Column(name = "price", nullable = false)

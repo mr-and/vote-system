@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -19,6 +20,9 @@ public interface MenuRepository extends JpaRepository<Menu, Integer> {
     String getMenuWithRestaurant = "SELECT m FROM Menu m WHERE m.restaurant.id=:restaurantId and m.id=:menuId";
 
     @EntityGraph(attributePaths = {"restaurant", "dishes"}, type = EntityGraph.EntityGraphType.LOAD)
+    Optional<Menu> findById(int menuId);
+
+    @EntityGraph(attributePaths = {"restaurant", "dishes"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query(getAll)
     List<Menu> getAllBy(@Param("id") int id);
 
@@ -26,7 +30,5 @@ public interface MenuRepository extends JpaRepository<Menu, Integer> {
     @Query(getMenuWithRestaurant)
     Menu getMenuWithRestaurant(@Param("restaurantId") int restaurantId, @Param("menuId") int menuId);
 
-    @EntityGraph(attributePaths = {"restaurant", "dishes"}, type = EntityGraph.EntityGraphType.LOAD)
-    Menu findById(int menuId);
 
 }

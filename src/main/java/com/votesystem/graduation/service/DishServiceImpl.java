@@ -1,11 +1,16 @@
 package com.votesystem.graduation.service;
 
+import com.votesystem.graduation.exception.CustomNotFound;
 import com.votesystem.graduation.model.Dish;
 import com.votesystem.graduation.repository.DishRepository;
 import com.votesystem.graduation.repository.MenuRepository;
 import com.votesystem.graduation.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import static com.votesystem.graduation.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
 public class DishServiceImpl implements DishService {
@@ -22,23 +27,24 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
+    @Transactional
     public Dish saveWithRestaurantAndMenu(int restaurantId, int menuId, Dish dish) {
-        var menu = menuRepository.findById(menuId);
-        menu.setRestaurant(restaurantRepository.findById(restaurantId).get());
+        Assert.notNull(dish, "dish must not be null");
+        var menu = menuRepository.findById(menuId).orElseThrow(()-> new CustomNotFound(menuId));
+        menu.setRestaurant(restaurantRepository.findById(restaurantId).orElseThrow(()-> new CustomNotFound(restaurantId)));
         dish.setMenu(menu);
         return dishRepository.save(dish);
     }
 
     @Override
+    @Transactional
     public void update(int restaurantId, int menuId, int dishId, Dish dish) {
-        var instanceDish = dishRepository.findById(dishId).get();
-        var instanceMenu = menuRepository.findById(menuId);
-        instanceMenu.setRestaurant(restaurantRepository.findById(restaurantId).get());
+        var instanceDish = dishRepository.findById(dishId).orElseThrow(()-> new CustomNotFound(dishId));
+        var instanceMenu = menuRepository.findById(menuId).orElseThrow(()-> new CustomNotFound(menuId));
+        instanceMenu.setRestaurant(checkNotFoundWithId(restaurantRepository.findById(restaurantId), restaurantId).get());
         instanceDish.setMenu(instanceMenu);
         instanceDish.setName(dish.getName());
         instanceDish.setPrice(dish.getPrice());
         dishRepository.save(instanceDish);
     }
-
-
 }
