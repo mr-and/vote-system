@@ -4,6 +4,9 @@ import com.votesystem.graduation.exception.CustomNotFound;
 import com.votesystem.graduation.model.Restaurant;
 import com.votesystem.graduation.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -28,11 +31,13 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    @Cacheable(cacheNames = "restaurants")
     public List<Restaurant> getAll() {
         return restaurantRepository.findAll();
     }
 
     @Override
+    @CachePut(cacheNames = "restaurants")
     public Restaurant save(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
         checkNew(restaurant);
@@ -40,6 +45,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    @CacheEvict(cacheNames = "restaurants")
     public void delete(int restaurantId) {
         restaurantRepository.findById(restaurantId).orElseThrow(() -> new CustomNotFound(restaurantId));
         restaurantRepository.deleteById(restaurantId);
