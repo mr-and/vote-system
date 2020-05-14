@@ -38,7 +38,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         errors.setStatus(HttpStatus.NOT_FOUND.value());
 
         return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
+    }
 
+    @ExceptionHandler(VoteTimeExpired.class)
+    public ResponseEntity<CustomError> handleMethodTimeout(Exception ex, WebRequest request) {
+        log.error(ex.getMessage() + " at request " + request.getDescription(true));
+        var errors = new CustomError();
+        errors.setTimestamp(LocalDateTime.now());
+        errors.setError(ex.getMessage());
+        errors.setStatus(HttpStatus.PRECONDITION_REQUIRED.value());
+
+        return new ResponseEntity<>(errors, HttpStatus.PRECONDITION_REQUIRED);
     }
 
     @ExceptionHandler(IllegalRequestDataException.class)
@@ -66,9 +76,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .collect(Collectors.toList());
 
         body.put("errors", errors);
-
         return new ResponseEntity<>(body, headers, status);
-
     }
-
 }

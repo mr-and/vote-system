@@ -1,6 +1,7 @@
 package com.votesystem.graduation.service;
 
 import com.votesystem.graduation.configuration.AuthUser;
+import com.votesystem.graduation.exception.VoteTimeExpired;
 import com.votesystem.graduation.model.Vote;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,5 +15,5 @@ public interface VoteService {
     List<Vote> getAll(int userId);
 
     @Transactional
-    void doVote(AuthUser user, int restaurantId) throws Exception;
+    void doVote(AuthUser user, int restaurantId) throws Exception, VoteTimeExpired;
 }

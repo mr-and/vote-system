@@ -2,6 +2,7 @@ package com.votesystem.graduation.service;
 
 import com.votesystem.graduation.configuration.AuthUser;
 import com.votesystem.graduation.exception.CustomNotFound;
+import com.votesystem.graduation.exception.VoteTimeExpired;
 import com.votesystem.graduation.model.Restaurant;
 import com.votesystem.graduation.model.Vote;
 import com.votesystem.graduation.repository.RestaurantRepository;
@@ -46,10 +47,10 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     @Transactional
-    public void doVote(AuthUser user, int restaurantId) throws Exception {
+    public void doVote(AuthUser user, int restaurantId) throws VoteTimeExpired {
 
         if (LocalTime.now().isAfter(LocalTime.of(11, 0))) {
-            throw new Exception("Vote late");
+            throw new VoteTimeExpired();
         }
 
         Vote vote = voteRepository.findByUserIdAndRestaurantId(user.getId(), restaurantId)
