@@ -15,5 +15,5 @@ public interface VoteService {
     List<Vote> getAll(int userId);
 
     @Transactional
-    void doVote(AuthUser user, int restaurantId) throws Exception, VoteTimeExpired;
+    void doVote(AuthUser user, int restaurantId) throws VoteTimeExpired;
 }

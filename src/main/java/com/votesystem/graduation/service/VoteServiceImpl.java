@@ -53,18 +53,17 @@ public class VoteServiceImpl implements VoteService {
             throw new VoteTimeExpired();
         }
 
-        Vote vote = voteRepository.findByUserIdAndRestaurantId(user.getId(), restaurantId)
-                .orElseThrow(()-> new CustomNotFound("Vote not found"));
-
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new CustomNotFound(restaurantId));
 
+        Vote vote = voteRepository.findByUserIdAndRestaurantId(user.getId(), restaurantId);
+
         Set<Vote> votes = restaurant.getVotes();
+
         if (votes.contains(vote)) {
             voteRepository.deleteById(vote.getId());
         } else {
-            voteRepository.save(new Vote(LocalDate.now(), userRepository.findById(user.getId()).get()));
+            voteRepository.save(new Vote(LocalDate.now(), userRepository.findById(user.getId()).get(), restaurant));
         }
-        restaurantRepository.save(restaurant);
     }
 }

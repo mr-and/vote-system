@@ -37,7 +37,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    @CachePut(cacheNames = "restaurants")
+    @CacheEvict(cacheNames = "restaurants", allEntries = true)
     public Restaurant save(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
         checkNew(restaurant);
@@ -45,7 +45,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    @CacheEvict(cacheNames = "restaurants")
+    @CacheEvict(cacheNames = "restaurants", allEntries = true)
     public void delete(int restaurantId) {
         restaurantRepository.findById(restaurantId).orElseThrow(() -> new CustomNotFound(restaurantId));
         restaurantRepository.deleteById(restaurantId);

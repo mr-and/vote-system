@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -21,7 +22,7 @@ import java.time.LocalDateTime;
 @Table(name = "votes")
 public class Vote extends AbstractBaseIdEntity implements Serializable {
 
-    @Column(name = "date", insertable = false, updatable = false, nullable = false)
+    @Column(name = "date")
     @NotNull
     private LocalDate date;
 
@@ -31,20 +32,21 @@ public class Vote extends AbstractBaseIdEntity implements Serializable {
     @JsonBackReference(value = "vote")
     private Restaurant restaurant;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference(value = "votes")
     private User user;
 
-    public Vote(LocalDate localDate, User user) {
-        this(null, localDate, user);
+    public Vote(LocalDate localDate, User user, Restaurant restaurant) {
+        this(null, localDate, user, restaurant);
     }
 
-    public Vote(Integer id, LocalDate localDate, User user) {
+    public Vote(Integer id, LocalDate localDate, User user, Restaurant restaurant) {
         super(id);
         this.date = localDate;
         this.user = user;
+        this.restaurant = restaurant;
     }
 
     @Override

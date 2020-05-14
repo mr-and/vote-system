@@ -2,6 +2,7 @@ package com.votesystem.graduation.controller;
 
 import com.votesystem.graduation.configuration.AuthUser;
 import com.votesystem.graduation.configuration.UserAccess;
+import com.votesystem.graduation.exception.VoteTimeExpired;
 import com.votesystem.graduation.service.VoteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class VoteController {
     @RequestMapping(value = {"/{restaurantId}/votes"}, method = {RequestMethod.PUT, RequestMethod.POST})
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void createOrUpdateVote(@AuthenticationPrincipal AuthUser user,
-                                   @PathVariable(value = "restaurantId") int restaurantId) throws Exception {
+                                   @PathVariable(value = "restaurantId") int restaurantId) throws VoteTimeExpired {
 
         log.info("vote for restaurant {}", restaurantId);
         voteService.doVote(user, restaurantId);
