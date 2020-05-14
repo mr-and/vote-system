@@ -1,76 +1,50 @@
 CREATE SEQUENCE GLOBAL_SEQ START WITH 1000 INCREMENT BY 1;
 
-CREATE TABLE dishes
+CREATE TABLE users
 (
-    id      INTEGER DEFAULT GLOBAL_SEQ.nextval PRIMARY KEY,
-    name    varchar(255) NOT NULL,
-    price   bigint       NOT NULL,
-    menu_id INTEGER      NOT NULL
-);
-
-CREATE TABLE menu
-(
-    id            INTEGER DEFAULT GLOBAL_SEQ.nextval PRIMARY KEY,
-    date          date    NOT NULL,
-    restaurant_id integer NOT NULL
-);
-
-CREATE TABLE restaurants
-(
-    id   INTEGER DEFAULT GLOBAL_SEQ.nextval PRIMARY KEY,
-    name varchar(255) NOT NULL
+    id       INTEGER DEFAULT GLOBAL_SEQ.nextval PRIMARY KEY,
+    email    VARCHAR(100) UNIQUE NOT NULL,
+    name     VARCHAR(255) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    constraint users_unique_email_idx unique (email)
 );
 
 CREATE TABLE user_roles
 (
     user_id INTEGER NOT NULL,
-    role    varchar(255)
+    role    VARCHAR(255),
+    foreign key (user_id) references users(id)
 );
 
-CREATE TABLE users
+CREATE TABLE restaurants
 (
-    id       INTEGER DEFAULT GLOBAL_SEQ.nextval PRIMARY KEY,
-    email    varchar(100) NOT NULL,
-    name     varchar(255) NOT NULL,
-    password varchar(100) NOT NULL
+    id   INTEGER DEFAULT GLOBAL_SEQ.nextval PRIMARY KEY,
+    name VARCHAR(255)       NOT NULL
+);
+
+CREATE TABLE menu
+(
+    id            INTEGER DEFAULT GLOBAL_SEQ.nextval PRIMARY KEY,
+    date          date      NOT NULL,
+    restaurant_id integer   NOT NULL,
+    foreign key (restaurant_id) references restaurants(id) on delete cascade
+);
+
+CREATE TABLE dishes
+(
+    id      INTEGER DEFAULT GLOBAL_SEQ.nextval PRIMARY KEY,
+    name    VARCHAR(255)    NOT NULL,
+    price   BIGINT          NOT NULL,
+    menu_id INTEGER         NOT NULL,
+    foreign key (menu_id)   references menu(id) on delete cascade
 );
 
 CREATE TABLE votes
 (
-    id      INTEGER DEFAULT GLOBAL_SEQ.nextval PRIMARY KEY,
-    date    date    NOT NULL,
-    restaurant_id INTEGER NOT NULL,
-    user_id integer NOT NULL
-
+    id              INTEGER DEFAULT GLOBAL_SEQ.nextval PRIMARY KEY,
+    date            DATE    NOT NULL,
+    restaurant_id   INTEGER,
+    user_id         INTEGER NOT NULL,
+    foreign key (user_id) references users(id) on delete cascade,
+    foreign key (restaurant_id) references restaurants(id) on delete SET NULL
 );
-
-ALTER TABLE users
-    add constraint users_unique_email_idx unique (email);
-
-ALTER TABLE dishes
-    add constraint FKmjyxiavmsmhlx7p6xg46a1lkf
-        foreign key (menu_id)
-            references menu;
-
-ALTER TABLE menu
-    add constraint FKrr0ffv1553rcdbwsr7vcckipf
-        foreign key (restaurant_id)
-            references restaurants;
-
-ALTER TABLE user_roles
-    add constraint FKhfh9dx7w3ubf1co1vdev94g3f
-        foreign key (user_id)
-            references users;
-
-
-ALTER TABLE votes
-    add constraint FKli4uj3ic2vypf5pialchj925e
-        foreign key (user_id)
-            references users
-            on delete cascade;
-
-ALTER TABLE votes
-    add constraint FK93nqd6kky7cyvbe4q1eup9gcx
-        foreign key (restaurant_id)
-            references restaurants
-            on delete cascade;
