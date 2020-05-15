@@ -5,6 +5,7 @@ import com.votesystem.graduation.model.Menu;
 import com.votesystem.graduation.repository.MenuRepository;
 import com.votesystem.graduation.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -27,6 +28,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = "restaurants", allEntries = true)
     public Menu save(Menu menu, int restaurantId) {
         Assert.notNull(menu, "menu must not be null");
         var restaurant = restaurantRepository
@@ -39,6 +41,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = "restaurants", allEntries = true)
     public void update(int restaurantId, int menuId, Menu menu) {
         Assert.notNull(menu, "menu must not be null");
         var menuWithRestaurant = getMenuWithRestaurant(restaurantId, menuId);

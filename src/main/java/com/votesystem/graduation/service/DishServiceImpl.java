@@ -6,6 +6,7 @@ import com.votesystem.graduation.repository.DishRepository;
 import com.votesystem.graduation.repository.MenuRepository;
 import com.votesystem.graduation.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -28,6 +29,7 @@ public class DishServiceImpl implements DishService {
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = "restaurants", allEntries = true)
     public Dish saveWithRestaurantAndMenu(int restaurantId, int menuId, Dish dish) {
         Assert.notNull(dish, "dish must not be null");
         var menu = menuRepository.findById(menuId).orElseThrow(()-> new CustomNotFound(menuId));
@@ -38,6 +40,7 @@ public class DishServiceImpl implements DishService {
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = "restaurants", allEntries = true)
     public void update(int restaurantId, int menuId, int dishId, Dish dish) {
         var instanceDish = dishRepository.findById(dishId).orElseThrow(()-> new CustomNotFound(dishId));
         var instanceMenu = menuRepository.findById(menuId).orElseThrow(()-> new CustomNotFound(menuId));
