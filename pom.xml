@@ -79,14 +79,13 @@
 		</dependency>
 
 		<!-- Auditing with Hibernate Envers -->
+<!--		https://www.tune-it.ru/web/ivanuskov/blog/-/blogs/1946179 -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-envers</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
 	</dependencies>
-
-
 
 	<build>
 		<plugins>

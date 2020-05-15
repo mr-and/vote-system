@@ -51,7 +51,7 @@ public class VoteServiceImpl implements VoteService {
     @CacheEvict(cacheNames = "restaurants", allEntries = true)
     public void doVote(AuthUser user, int restaurantId) throws VoteTimeExpired {
 
-        if (LocalTime.now().isAfter(LocalTime.of(23, 40))) {
+        if (LocalTime.now().isAfter(LocalTime.of(11, 00))) {
             throw new VoteTimeExpired();
         }
 
