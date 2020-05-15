@@ -26,7 +26,7 @@ public class VoteController {
     }
 
     @UserAccess
-    @RequestMapping(value = {"/{restaurantId}/votes"}, method = {RequestMethod.PUT, RequestMethod.POST})
+    @RequestMapping(value = {"/{restaurantId}/votes"}, method = {RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void createOrUpdateVote(@AuthenticationPrincipal AuthUser user,
                                    @PathVariable(value = "restaurantId") int restaurantId) throws VoteTimeExpired {

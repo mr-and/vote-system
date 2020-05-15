@@ -9,6 +9,7 @@ import com.votesystem.graduation.repository.RestaurantRepository;
 import com.votesystem.graduation.repository.UserRepository;
 import com.votesystem.graduation.repository.VoteRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,9 +48,10 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = "restaurants", allEntries = true)
     public void doVote(AuthUser user, int restaurantId) throws VoteTimeExpired {
 
-        if (LocalTime.now().isAfter(LocalTime.of(11, 0))) {
+        if (LocalTime.now().isAfter(LocalTime.of(23, 40))) {
             throw new VoteTimeExpired();
         }
 
@@ -65,5 +67,6 @@ public class VoteServiceImpl implements VoteService {
         } else {
             voteRepository.save(new Vote(LocalDate.now(), userRepository.findById(user.getId()).get(), restaurant));
         }
+        restaurantRepository.save(restaurant);
     }
 }

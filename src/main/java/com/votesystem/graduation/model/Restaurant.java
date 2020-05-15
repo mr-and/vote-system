@@ -3,6 +3,8 @@ package com.votesystem.graduation.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -13,6 +15,7 @@ import java.util.Set;
 
 @Entity
 @Getter
+@Audited
 @NoArgsConstructor
 @Table(name = "restaurants", uniqueConstraints = {@UniqueConstraint(columnNames = {"name"}, name = "name_address_unique_idx")})
 public class Restaurant extends AbstractBaseIdEntity implements Serializable {
@@ -22,11 +25,12 @@ public class Restaurant extends AbstractBaseIdEntity implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "restaurant", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "restaurant")
     private Set<Vote> votes;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "restaurant", orphanRemoval = true)
     @JsonIgnore
+    @NotAudited
     private List<Menu> menus;
 
     public Restaurant(Integer id, String name) {
