@@ -57,3 +57,4 @@ public class Vote extends AbstractBaseIdEntity implements Serializable {
     }
 
 }
+

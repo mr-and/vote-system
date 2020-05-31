@@ -6,7 +6,6 @@ import com.votesystem.graduation.configuration.AuthAccess;
 import com.votesystem.graduation.exception.CustomNotFound;
 import com.votesystem.graduation.model.Restaurant;
 import com.votesystem.graduation.service.RestaurantService;
-import com.votesystem.graduation.service.RestaurantServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +28,7 @@ public class RestaurantController {
     private final RestaurantService restaurantService;
 
     @Autowired
-    public RestaurantController(RestaurantServiceImpl restaurantService) {
+    public RestaurantController(RestaurantService restaurantService) {
         this.restaurantService = restaurantService;
     }
 

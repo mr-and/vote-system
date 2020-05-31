@@ -77,13 +77,29 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
-		<!-- Auditing with Hibernate Envers -->
-<!--		https://www.tune-it.ru/web/ivanuskov/blog/-/blogs/1946179 -->
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-test -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<version>5.3.2.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Audit with Hibernate Envers -->
+		<!--https://www.tune-it.ru/web/ivanuskov/blog/-/blogs/1946179 -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-envers</artifactId>
 			<version>${hibernate.version}</version>
+		</dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -95,5 +111,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
